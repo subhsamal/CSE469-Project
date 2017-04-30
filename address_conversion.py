@@ -32,7 +32,7 @@ def address_parser():
     parser.add_argument('-p', '--physical-known', metavar = 'address', type = int,
         help = 'This specifies the known physical address for calculating either a cluster address or a logical address. When used with the –P option, \
                 this simply returns the value given for address.')
-    parser.add_argument('-c', '--cluster_known', metavar = 'address', type = int,
+    parser.add_argument('-c', '--cluster-known', metavar = 'address', type = int,
         help = 'This specifies the known cluster address for calculating either a logical address or a physical address. When used with the –C option, \
                 this simply returns the value given for address. Note that options –k, -r, -t, and –f must be provided with this option.')
     parser.add_argument('-k', '--cluster_size', metavar = 'sectors', type = int, help = 'This specifies the number of sectors per cluster.')
@@ -68,10 +68,10 @@ def address_logical(physical_address = None, cluster_address = None, offset = 0)
             raise Exception ('all of -k, -t, -f and -r need to be provided to calculate L')
         logical_address = args.partition_start + ((cluster_address - 2) * args.cluster_size) + args.reserved + (args.fat_tables * args.fat_length)
     elif physical_address is not None:
-        logical_address = physical_address
+        logical_address = physical_address - offset
     else:
         logical_address = None
-    logical_address = logical_address - offset
+    #logical_address = logical_address - offset
     return logical_address
 
 
@@ -87,7 +87,7 @@ def address_cluster(physical_address = None, logical_address = None, offset = 0)
     else:
         cluster_address = None
     return cluster_address
-    
+
 
 def main():
     #parser = argparse.ArgumentParser()   take this part into a separate function
@@ -99,7 +99,8 @@ def main():
     if args.physical:
         print(address_physical(logical_address = args.logical_known, cluster_address = args.cluster_known, offset = args.partition_start))
     if args.logical:
-        print(address_logical(physical_address = args.physical_known, cluster_address = args.cluster_known, offset = args.partition_start))
+        print ("I am here")
+        print(address_logical(physical_address1 = args.physical_known, cluster_address1 = args.cluster_known, offset = args.partition_start))
     if args.cluster:
         print(address_cluster(physical_address = args.physical_known, logical_address = args.logical_known, offset = args.partition_start))
 
