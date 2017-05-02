@@ -99,8 +99,8 @@ def main():
     if args.physical:
         print(address_physical(logical_address = args.logical_known, cluster_address = args.cluster_known, offset = args.partition_start))
     if args.logical:
-        print ("I am here")
-        print(address_logical(physical_address1 = args.physical_known, cluster_address1 = args.cluster_known, offset = args.partition_start))
+        #print ("I am here")
+        print(address_logical(physical_address = args.physical_known, cluster_address = args.cluster_known, offset = args.partition_start))
     if args.cluster:
         print(address_cluster(physical_address = args.physical_known, logical_address = args.logical_known, offset = args.partition_start))
 
